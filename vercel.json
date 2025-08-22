@@ -1,9 +1,27 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/server.js", "use": "@vercel/node" }
+    {
+      "src": "gameon-website/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/server.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "api/server.js" }
+    {
+      "src": "/api/(.*)",
+      "dest": "api/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/gameon-website/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "api/uploads/$1"
+    }
   ]
 }
