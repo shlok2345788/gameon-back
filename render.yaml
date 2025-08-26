@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: gameon-backend
+    env: node
+    rootDir: gameon-backend
+    buildCommand: npm install --force
+    startCommand: npm start
+    autoDeploy: true
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+    disks:
+      - name: uploads
+        mountPath: /opt/render/project/src/gameon-backend/uploads
+        sizeGB: 1

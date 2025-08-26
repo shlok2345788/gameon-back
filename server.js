@@ -18,7 +18,8 @@ const corsOptions = {
         'https://gameson.vercel.app',
         'https://gameson-git-main-shlok2345788.vercel.app',
         'https://gameson-shlok2345788.vercel.app',
-        'https://gameon-website.vercel.app'
+        'https://gameon-website.vercel.app',
+        'https://game-frotend-phi.vercel.app'
       ] 
     : ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true,
