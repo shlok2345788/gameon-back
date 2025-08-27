@@ -5,7 +5,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const uri = process.env.MONGO_URI; 
 
 const app = express();
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -27,9 +28,20 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI).then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// MongoDB Connection with validation and clearer errors
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+  console.error('❌ Missing MONGO_URI environment variable. Ensure it is defined in gameon-backend/.env');
+  process.exit(1);
+}
+if (!/^mongodb(?:\+srv)?:\/\//.test(mongoUri)) {
+  console.error('❌ Invalid MONGO_URI scheme. It must start with "mongodb://" or "mongodb+srv://". Got:', mongoUri);
+  process.exit(1);
+}
+
+mongoose.connect(mongoUri)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Product Schema
 const productSchema = new mongoose.Schema({
