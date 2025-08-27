@@ -2,9 +2,10 @@ services:
   - type: web
     name: gameon-backend
     env: node
+    # Keep rootDir for clarity, but also prefix commands to be explicit
     rootDir: gameon-backend
-    buildCommand: npm install --force
-    startCommand: npm start
+    buildCommand: npm ci --prefix gameon-backend
+    startCommand: npm start --prefix gameon-backend
     autoDeploy: true
     plan: starter
     healthCheckPath: /api/health
